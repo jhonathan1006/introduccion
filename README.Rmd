@@ -1,0 +1,387 @@
+---
+title: "Exploración  de datos con R Package"
+output: github_document
+---
+
+```{r}
+#Institucion: Programa de Ingenieria en Topografia de las Unidades Tecnológicas de Santander
+
+# autor: "Aponte Saravia Jhonathan"
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción 
+
+En este proceso se intenta de presentar procesos de acercamiento de con el programa R Package,
+
+## Desarrollo del proceso 
+#### Operaciones basicas con R
+
+```{r}
+Primer_valor <- 25
+Primer_valor
+Segundo_valor <- 27
+Segundo_valor
+#  sumando  y restando valores 
+suma <- Primer_valor + Segundo_valor
+suma
+
+difer <- Primer_valor - Segundo_valor
+difer
+# multiplicando valores 
+
+producto <- Primer_valor*Segundo_valor
+producto
+
+# valor abosulto 
+
+absoluto <- abs(Primer_valor - Segundo_valor)
+absoluto
+
+# potenciación 
+pot<-absoluto^16
+pot
+```
+#### Explorando datos  
+
+```{r}
+prec<- c(34,46 ,	67,	113,	102,	63,	47,	47,	56,	119,	112,	60) 
+mes<-c("enero", "febrero","marzo", "abril", "mayo", "junio","julio","agosto", "septiembre", "octubre","noviembre","diciembre")
+# mostrando las caracteristicas de los datos
+ class(prec)
+ class(mes)
+# explorando losvalores estadisticos del conjunto 
+summary(prec)
+
+#Mostrando el conjuto de valores 
+print(prec)
+# graficando los datos
+plot(prec)
+
+#Calculo de valores máximos y mínimos. 
+max(prec)
+
+min(prec)
+```
+#### Importando y explorando datos desde excel 
+El proceso de importacion de datos tipo tabla desde excel y/o otros formatos, es bastante sencillo, para ello nos ubicamos en la opción de importar datos desde excel, y ruteamos  el directorio donde se encuentra el archivo, o  importamos con el codigo de read_excel(), ubicamos la ruta donde se enceuntra el archivo. como se muestra a continuación:  
+
+```{r}
+library(readxl)
+#Libro1 < read_excel("......./direccion/Libro1.xlsx")
+```
+
+
+```{r, echo=FALSE}
+
+Libro1 <- read_excel("E:/A_UTS/2021-I/Docencia/Cartografia digital/8 Primera Aproximacion a los sistemas de informacion II/Taller/Libro1.xlsx")
+
+```
+```{r}
+#Exploramos los datos
+head(Libro1)
+# Exploramos los valores estadisticos
+summary(Libro1)
+#Calculamos valores temperatura superiores a 16 °C
+Libro1[Libro1$Tmax > 16,]
+#Calculamos valores precipitacion superiores a 50mm
+Libro1[Libro1$Precipitacion > 50,]
+#Graficamos el comportamiento de la precipitacion 
+plot(Libro1$Precipitacion) 
+#Graficamos el comportamiento de la precipitacion en histogramas.
+hist(Libro1$Precipitacion)
+
+# Generamos procesos de  correlación entre los valores  por el método de pearson y spearman
+#Método de pearson
+cor(Libro1$Precipitacion, Libro1$Tmedia, method = "pearson")
+#Método de spearman
+cor(Libro1$Precipitacion, Libro1$Tmedia, method = "spearman")
+
+
+# Generamos los procesos de  regresion lineal entre la precipitacion y la temperatura media
+reg <-lm(Libro1$Precipitacion ~ Libro1$Tmedia)
+
+# Resumen del proceso de regresión.
+summary(reg)
+
+pairs(Libro1$Precipitacion ~ Libro1$Tmedia)
+
+library(PerformanceAnalytics)
+
+dat1<-data.frame(Libro1$Precipitacion, Libro1$Tmedia)
+
+chart.Correlation(dat1)
+
+```
+### Explorando datos vectoriales 
+
+#### Creando datos vectoriales tipo punto
+ Para realizar los procesos de exploracion y  creacion de datos vectoriales se debe  isntalar la libreria: library(sf)
+ 
+```{r}
+library(sf)
+library(rgdal)
+```
+#### Creando un dato vectorial tipo punto (punto unico) 
+```{r}
+p <- st_point(c(707203.42,785800.53,933),"XYZ")
+class(p)
+str(p)
+# Mostrando el punto el las coordenadas
+plot(p, axes = "TRUE")
+
+```
+#### Creando varios puntos
+```{r}
+# Ingresando los valores en el eje de las abcisas y ordenadas y los valores de altitud.
+X <- c (707211.25,707272.60,707281.55,707339.70,707328.83,707284.91,
+                  707279.60,707214.99,707184.29,707198.97,707203.01)
+
+Y <- c(785848.80,785835.89,785869.49,785856.82,785813.29,785775.19,
+                  785741.15,785699.51,785718.96,785791.30,785817.58)
+
+Z <-c (930,931,931,932,932,932,932,931,929,930,930)
+
+#Integrando los valores en la tabla.
+coord <- cbind(X,Y)
+
+#Contenido de los datos
+print(coord)
+class(coord)
+str(coord)
+# Mostrando la distribucion de los  puntos en el eje cartesiano
+plot(coord, axes = TRUE)
+
+```
+
+#### Creando multipuntos
+#### Opcion 1
+
+```{r}
+#Agregando el valor de la coordenada en el eje Z
+XYZ <- cbind(coord,Z)
+XYZ
+# generando multipunto
+mp<-st_multipoint(XYZ)
+mp
+# Presentando la distribución de los puntos en el eje cartesiano
+plot(mp, axes = "TRUE")
+
+# calculando el centriode de los puntos.
+cen <-st_centroid(mp)
+cen
+```
+
+#### Opcion 2
+
+```{r}
+v1 <- st_point(c(707211.25,785848.80),"XY")
+v2 <- st_point(c(707272.60,785835.89),"XY")
+v3 <- st_point(c(707281.55,785869.49),"XY")
+v4 <- st_point(c(707339.70,785856.82),"XY")
+v5 <- st_point(c(707328.83,785813.29),"XY")
+v6 <- st_point(c(707284.91,785775.19),"XY")
+v7 <- st_point(c(707279.60,785741.15),"XY")
+v8 <- st_point(c(707214.99,785699.51),"XY")
+v9 <- st_point(c(707184.29,785718.96),"XY")
+v10 <- st_point(c(707198.97,785791.30),"XY")
+v11 <- st_point(c(707203.01,785817.58),"XY")
+
+geom <- st_sfc(v1,v2,v3,v4,v5,v6,v7, v8, v9,v10,v11)
+
+str(geom)
+summary(geom)
+plot(geom)
+plot(geom, axes = "TRUE")
+
+```
+
+##### Asociado la geometría con la tabla de atributos 
+
+```{r}
+num <- c(1,2,3,4,5,6,7,8,9,10,11)
+nomb <- c("v1", "v2", "v3","v4","v5","v6","v7","v8","v9","v10","v11")
+
+#generando la data frame
+tabpuntos <- data.frame(cbind(num, nomb))
+
+summary(tabpuntos)
+
+class(tabpuntos)
+
+print(tabpuntos)
+
+SFP <- st_sf(tabpuntos$nomb, geometry = geom)
+
+plot(SFP, axes = "TRUE")
+
+```
+
+#### Generando  datos tipo linea 
+```{r}
+# Construcción de la primera red  
+
+X1s <- c(604940.00,605144.00,605174.00,605485.00,605602.00,605659.00)
+Y1s <- c(533681.00,533539.00,533509.00,533316.00,533248.00,533205.00)
+
+Coord1 <- cbind(X1s,Y1s)
+
+L1 <- st_linestring(Coord1)
+
+class(L1)
+
+plot(L1, axes= "TRUE")
+
+# Construcción de la segunda red
+
+X2s <- c(605241.00,605091.07,604940.00)
+Y2s <- c(534005.00,533821.04,533681.00)
+Coord2 <- cbind(X2s,Y2s)
+L2 <- st_linestring(Coord2)
+plot(L2, axes= "TRUE")
+
+# Construcción de la tercera red
+X3s <- c(605293.00,605226.76,605144.00)
+Y3s <- c(533847.00,533750.51,533539.00)
+Coord3 <- cbind(X3s,Y3s)
+
+L3 <- st_linestring(Coord3)
+plot(L3, axes= "TRUE")
+
+# Construcción de cuarta red
+
+X4s <- c(605185.00,605162.84,605174.00)
+Y4s <- c(533305.00,533414.66,533509.00)
+Coord4 <- cbind(X4s,Y4s)
+
+L4 <- st_linestring(Coord4)
+
+plot(L4, axes= "TRUE")
+
+#Integrando todas las redes o las lineas vectoriales. 
+geometria2 <- st_sfc(L1,L2,L3,L4)
+
+plot(geometria2, axes=TRUE)
+
+# Tabla de atributos
+num <- c(1,2,3,4)
+code <- c("Vp","Vs1","Vs2","Vs3")
+tipo <- c("ViaP","Trocha1","trocha2","trocha3")
+tablineas <- data.frame(cbind(num,tipo,code))
+
+SFL <- st_sf(tablineas$tipo, geometry = geometria2)
+plot(SFL,axes=TRUE)
+
+```
+
+#### Generando  datos tipo poligono
+
+```{r}
+# primer poligono
+
+X1 <- c(707211.25,707272.60,707281.55,707339.70,707328.83,707284.91,
+         707279.60,707214.99,707184.29,707198.97,707203.01,707211.25)
+Y1 <- c(785848.80,785835.89,785869.49,785856.82,785813.29,785775.19,
+         785741.15,785699.51,785718.96,785791.30,785817.58,785848.80)
+
+coord1 <- cbind(X1,Y1)
+
+poli <- st_polygon(list(coord1))
+plot(poli, axes = T)
+
+#segundo poligono
+
+x2 <-c(707216.19,707285.82,707279.79,707212.53,707216.19)
+y2 <-c(785816.28,785803.90,785777.12,785788.84,785816.28)
+coord2 <- cbind(x2,y2)
+
+poli2 <- st_polygon(list(coord2))
+
+plot(poli2, axes = T)
+
+#Tercer poligono
+
+X3 <- c (707272.60,707281.55,707339.70,707328.83,707272.60)
+Y3 <- c(785835.89,785869.49,785856.82,785813.29,785835.89)
+
+coord3 <- cbind(X3,Y3)
+
+poli3 <- st_polygon(list(coord3))
+
+plot(poli3, axes = T)
+
+# Integrando los poligonos
+
+p2 <- st_polygon(list(coord1,coord2,coord3))
+plot(p2, axes = T)
+
+geometria <- st_sfc(poli,poli2,poli3)
+
+#Generando la tabla de atributos.
+ID <- c(1,2,3)
+Cod <- c("Ac", "NC","EC")
+Tipo <- c("Area construida", "No construida", "En construccion")
+tabpol <- data.frame(cbind(ID,Cod,Tipo))
+
+# Uniendo los atributos con el vector 
+SFpol <- st_sf(tabpol$Tipo, geometry = geometria )
+plot(SFpol, axes = T)
+
+as.data.frame(SFpol)
+
+print(SFpol[Cod=="EC",])
+
+nocosntr<-(SFpol[Cod=="EC",])
+
+plot(st_geometry(SFpol), axes=TRUE);plot(nocosntr,add=TRUE,col = "BLUE");
+
+# calculo de  algunas alpicaciones 
+#superficie y perimetro.
+
+sup <-st_area(poli3)
+sup
+# calculo de Perimetro 
+bound<-st_boundary(poli3)
+bound
+long <-st_length(bound)
+long
+
+# centroide
+centroi<-st_centroid(poli3)
+centroi
+
+
+# cálculo de Buffers 
+buf <-st_buffer(poli3, dist=5)
+
+geom <- st_sfc(poli3, buf)
+
+plot(geom, axes = T, border = "blue")
+
+# generando las coordenadas del poligono.
+
+cord <-st_coordinates(buf) 
+cord
+
+```
+### Crear datos tipo raster.
+```{r}
+library(raster)
+
+m <- matrix(c(runif(1600, min=0, max=100)), ncol = 40, nrow = 40,byrow = TRUE )
+
+summary(m)
+
+r<- raster(m)
+
+extent(r) <- extent(c(0,100,0,100))
+
+class(r)
+
+
+plot(r)
+```
