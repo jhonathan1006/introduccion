@@ -2,17 +2,23 @@ Exploración de datos con R Package
 ================
 
 ``` r
-#Institucion: Programa de Ingenieria en Topografia de las Unidades Tecnológicas de Santander
-
-# autor: "Aponte Saravia Jhonathan"
+#Institucion: Unidades Tecnológicas de Santander
+# Programa: Ingenieria en Topografía
+# Autor: "Aponte Saravia Jhonathan"
 ```
 
-## Introducción
+## Descripcion del constexto
 
-En este proceso se intenta de presentar procesos de acercamiento de con
-el programa R Package,
-
-## Desarrollo del proceso
+A continuación, se presenta aplicaciones básicas de exploración de datos
+en lenguaje R, donde se comparten los códigos y las instrucciones para
+realizar operaciones elementales de cálculos aritméticos, procesos de
+importación de datos, creación de datos vectoriales tales como: la
+creación de puntos, líneas y polígonos y algunas aplicaciones básicas de
+cálculo de superficie, perímetro, estimación de coordenadas; así
+también, la creación de datos tipo raster. El propósito de la guía, está
+dirigido a interesados que tengan afinidad a los programas de
+ingeniería, cuyo interés es el uso de los datos espaciales, así mismo,
+es de circulación nacional sin enfoque diferencial.
 
 #### Operaciones basicas con R
 
@@ -923,76 +929,76 @@ m <- matrix(c(runif(1600, min=0, max=100)), ncol = 40, nrow = 40,byrow = TRUE )
 summary(m)
 ```
 
-    ##        V1               V2               V3                V4         
-    ##  Min.   : 3.946   Min.   : 1.864   Min.   : 0.1521   Min.   : 0.7157  
-    ##  1st Qu.:43.860   1st Qu.:24.211   1st Qu.:17.9398   1st Qu.:37.7190  
-    ##  Median :64.551   Median :44.759   Median :42.5018   Median :57.2575  
-    ##  Mean   :59.714   Mean   :44.828   Mean   :43.6542   Mean   :56.5861  
-    ##  3rd Qu.:77.376   3rd Qu.:68.528   3rd Qu.:68.2261   3rd Qu.:79.5815  
-    ##  Max.   :99.002   Max.   :99.369   Max.   :99.4959   Max.   :99.7772  
-    ##        V5               V6              V7               V8         
-    ##  Min.   : 3.406   Min.   : 2.52   Min.   : 1.245   Min.   : 0.8224  
-    ##  1st Qu.:39.658   1st Qu.:24.23   1st Qu.:24.900   1st Qu.:24.7563  
-    ##  Median :64.225   Median :53.25   Median :44.809   Median :57.5020  
-    ##  Mean   :59.323   Mean   :48.16   Mean   :49.940   Mean   :53.1209  
-    ##  3rd Qu.:84.938   3rd Qu.:69.22   3rd Qu.:75.181   3rd Qu.:77.4658  
-    ##  Max.   :96.382   Max.   :92.58   Max.   :98.434   Max.   :99.2197  
-    ##        V9              V10              V11              V12         
-    ##  Min.   : 1.547   Min.   : 1.323   Min.   : 2.242   Min.   : 0.9925  
-    ##  1st Qu.:27.234   1st Qu.:21.885   1st Qu.:25.994   1st Qu.:31.9078  
-    ##  Median :49.779   Median :40.177   Median :59.070   Median :48.4478  
-    ##  Mean   :51.770   Mean   :46.063   Mean   :51.491   Mean   :50.1825  
-    ##  3rd Qu.:77.884   3rd Qu.:68.985   3rd Qu.:65.420   3rd Qu.:70.0409  
-    ##  Max.   :99.565   Max.   :98.733   Max.   :97.701   Max.   :96.1898  
-    ##       V13              V14              V15              V16        
-    ##  Min.   : 1.207   Min.   : 6.117   Min.   : 2.338   Min.   : 2.146  
-    ##  1st Qu.:12.597   1st Qu.:27.402   1st Qu.:27.529   1st Qu.:38.609  
-    ##  Median :46.134   Median :49.551   Median :48.802   Median :59.340  
-    ##  Mean   :46.626   Mean   :49.134   Mean   :48.436   Mean   :56.591  
-    ##  3rd Qu.:75.525   3rd Qu.:71.890   3rd Qu.:63.882   3rd Qu.:77.809  
-    ##  Max.   :99.676   Max.   :98.798   Max.   :98.278   Max.   :97.151  
-    ##       V17               V18             V19              V20        
-    ##  Min.   : 0.6565   Min.   : 2.72   Min.   : 5.306   Min.   : 2.824  
-    ##  1st Qu.:27.8336   1st Qu.:47.39   1st Qu.:27.153   1st Qu.:17.980  
-    ##  Median :56.2466   Median :67.27   Median :55.356   Median :46.909  
-    ##  Mean   :53.8334   Mean   :64.11   Mean   :51.021   Mean   :47.871  
-    ##  3rd Qu.:78.8057   3rd Qu.:89.38   3rd Qu.:71.158   3rd Qu.:71.998  
-    ##  Max.   :97.7444   Max.   :97.60   Max.   :99.496   Max.   :96.122  
-    ##       V21              V22             V23              V24        
-    ##  Min.   : 2.939   Min.   : 3.94   Min.   : 5.548   Min.   : 1.916  
-    ##  1st Qu.:26.548   1st Qu.:20.60   1st Qu.:24.062   1st Qu.:26.513  
-    ##  Median :53.022   Median :48.46   Median :48.809   Median :55.241  
-    ##  Mean   :50.396   Mean   :49.03   Mean   :48.486   Mean   :53.471  
-    ##  3rd Qu.:70.113   3rd Qu.:69.93   3rd Qu.:71.361   3rd Qu.:77.303  
-    ##  Max.   :97.323   Max.   :97.89   Max.   :90.256   Max.   :99.125  
-    ##       V25               V26              V27              V28        
-    ##  Min.   : 0.6237   Min.   : 4.935   Min.   : 2.321   Min.   : 1.456  
-    ##  1st Qu.:27.1414   1st Qu.:22.757   1st Qu.:33.082   1st Qu.:37.955  
-    ##  Median :52.4010   Median :46.239   Median :57.416   Median :63.735  
-    ##  Mean   :49.9645   Mean   :49.175   Mean   :52.058   Mean   :57.322  
-    ##  3rd Qu.:76.1177   3rd Qu.:71.841   3rd Qu.:72.530   3rd Qu.:82.334  
-    ##  Max.   :97.3128   Max.   :98.543   Max.   :91.823   Max.   :99.785  
-    ##       V29              V30              V31               V32        
-    ##  Min.   : 1.327   Min.   : 3.249   Min.   : 0.5901   Min.   : 3.924  
-    ##  1st Qu.:38.277   1st Qu.:19.928   1st Qu.:28.9075   1st Qu.:45.063  
-    ##  Median :62.768   Median :47.201   Median :54.7319   Median :58.747  
-    ##  Mean   :60.108   Mean   :43.642   Mean   :52.3539   Mean   :57.994  
-    ##  3rd Qu.:90.349   3rd Qu.:61.939   3rd Qu.:79.8937   3rd Qu.:70.515  
-    ##  Max.   :99.548   Max.   :99.162   Max.   :94.5243   Max.   :99.194  
-    ##       V33              V34              V35               V36       
-    ##  Min.   : 2.344   Min.   : 4.519   Min.   : 0.7051   Min.   : 1.86  
-    ##  1st Qu.:17.205   1st Qu.:26.518   1st Qu.:22.3246   1st Qu.:17.09  
-    ##  Median :37.956   Median :58.467   Median :40.4385   Median :31.71  
-    ##  Mean   :41.295   Mean   :51.682   Mean   :46.6953   Mean   :42.80  
-    ##  3rd Qu.:62.552   3rd Qu.:75.701   3rd Qu.:72.3391   3rd Qu.:62.97  
-    ##  Max.   :95.308   Max.   :98.944   Max.   :98.1116   Max.   :99.63  
-    ##       V37               V38               V39              V40         
-    ##  Min.   : 0.2805   Min.   : 0.4802   Min.   : 5.661   Min.   : 0.1935  
-    ##  1st Qu.:27.6310   1st Qu.:15.3645   1st Qu.:29.164   1st Qu.:14.7799  
-    ##  Median :48.1292   Median :45.4923   Median :49.363   Median :57.5016  
-    ##  Mean   :51.5023   Mean   :47.0599   Mean   :50.712   Mean   :51.7437  
-    ##  3rd Qu.:78.4720   3rd Qu.:84.1203   3rd Qu.:71.982   3rd Qu.:79.5460  
-    ##  Max.   :97.8367   Max.   :98.6197   Max.   :99.992   Max.   :99.5285
+    ##        V1               V2              V3               V4         
+    ##  Min.   : 2.186   Min.   : 5.72   Min.   : 1.011   Min.   : 0.3875  
+    ##  1st Qu.:29.057   1st Qu.:21.05   1st Qu.:14.777   1st Qu.:16.9186  
+    ##  Median :54.117   Median :35.22   Median :69.537   Median :37.7047  
+    ##  Mean   :50.691   Mean   :42.97   Mean   :54.501   Mean   :43.7626  
+    ##  3rd Qu.:75.082   3rd Qu.:68.17   3rd Qu.:84.132   3rd Qu.:71.1053  
+    ##  Max.   :96.436   Max.   :92.91   Max.   :98.169   Max.   :99.4691  
+    ##        V5              V6                V7                V8         
+    ##  Min.   : 1.81   Min.   : 0.2931   Min.   : 0.8606   Min.   : 0.2985  
+    ##  1st Qu.:26.20   1st Qu.:17.4227   1st Qu.:20.7662   1st Qu.:21.0512  
+    ##  Median :52.54   Median :48.9329   Median :54.4479   Median :46.6547  
+    ##  Mean   :49.35   Mean   :47.2907   Mean   :45.1298   Mean   :47.3105  
+    ##  3rd Qu.:67.48   3rd Qu.:71.2263   3rd Qu.:66.7072   3rd Qu.:71.0347  
+    ##  Max.   :98.79   Max.   :97.8350   Max.   :99.5335   Max.   :97.2964  
+    ##        V9               V10              V11               V12        
+    ##  Min.   : 0.9454   Min.   : 1.901   Min.   : 0.5608   Min.   : 2.734  
+    ##  1st Qu.:21.7724   1st Qu.:18.124   1st Qu.:23.8309   1st Qu.:24.270  
+    ##  Median :42.1632   Median :47.713   Median :54.1335   Median :49.538  
+    ##  Mean   :49.1354   Mean   :49.384   Mean   :48.6877   Mean   :51.827  
+    ##  3rd Qu.:76.9712   3rd Qu.:78.261   3rd Qu.:68.2168   3rd Qu.:79.087  
+    ##  Max.   :98.3447   Max.   :99.275   Max.   :99.6822   Max.   :99.353  
+    ##       V13               V14              V15             V16        
+    ##  Min.   : 0.5907   Min.   : 1.486   Min.   : 1.89   Min.   : 0.269  
+    ##  1st Qu.:30.7581   1st Qu.:25.961   1st Qu.:23.92   1st Qu.:17.630  
+    ##  Median :52.0061   Median :51.912   Median :36.37   Median :46.763  
+    ##  Mean   :53.1926   Mean   :49.216   Mean   :45.13   Mean   :49.074  
+    ##  3rd Qu.:81.7657   3rd Qu.:67.547   3rd Qu.:71.42   3rd Qu.:79.214  
+    ##  Max.   :98.9768   Max.   :94.875   Max.   :91.97   Max.   :97.896  
+    ##       V17              V18               V19              V20         
+    ##  Min.   : 2.431   Min.   : 0.4698   Min.   : 4.469   Min.   : 0.8707  
+    ##  1st Qu.:33.706   1st Qu.:18.6767   1st Qu.:35.357   1st Qu.:29.0866  
+    ##  Median :51.379   Median :59.5369   Median :59.329   Median :42.1926  
+    ##  Mean   :52.468   Mean   :48.6055   Mean   :55.248   Mean   :48.6128  
+    ##  3rd Qu.:75.033   3rd Qu.:71.2592   3rd Qu.:75.450   3rd Qu.:71.7296  
+    ##  Max.   :97.882   Max.   :96.5148   Max.   :89.861   Max.   :96.6411  
+    ##       V21               V22              V23              V24        
+    ##  Min.   : 0.5442   Min.   : 5.934   Min.   : 7.679   Min.   : 1.487  
+    ##  1st Qu.:16.9527   1st Qu.:32.043   1st Qu.:23.489   1st Qu.:30.616  
+    ##  Median :44.7966   Median :49.562   Median :54.175   Median :55.517  
+    ##  Mean   :46.4572   Mean   :49.114   Mean   :56.533   Mean   :50.231  
+    ##  3rd Qu.:75.7387   3rd Qu.:68.435   3rd Qu.:89.312   3rd Qu.:73.779  
+    ##  Max.   :98.5334   Max.   :94.023   Max.   :99.120   Max.   :95.321  
+    ##       V25              V26              V27              V28        
+    ##  Min.   : 4.458   Min.   : 4.273   Min.   : 3.188   Min.   : 3.391  
+    ##  1st Qu.:33.647   1st Qu.:33.094   1st Qu.:25.745   1st Qu.:25.052  
+    ##  Median :49.193   Median :53.525   Median :51.837   Median :57.841  
+    ##  Mean   :51.080   Mean   :50.587   Mean   :54.190   Mean   :52.208  
+    ##  3rd Qu.:72.196   3rd Qu.:72.210   3rd Qu.:83.743   3rd Qu.:78.403  
+    ##  Max.   :98.775   Max.   :94.311   Max.   :99.950   Max.   :99.845  
+    ##       V29              V30              V31              V32        
+    ##  Min.   : 3.223   Min.   : 1.911   Min.   : 4.565   Min.   : 3.585  
+    ##  1st Qu.:26.678   1st Qu.:24.626   1st Qu.:25.598   1st Qu.:21.206  
+    ##  Median :55.705   Median :45.847   Median :50.350   Median :47.464  
+    ##  Mean   :56.563   Mean   :46.303   Mean   :51.766   Mean   :48.174  
+    ##  3rd Qu.:85.475   3rd Qu.:68.264   3rd Qu.:73.436   3rd Qu.:79.130  
+    ##  Max.   :99.313   Max.   :96.124   Max.   :99.199   Max.   :98.656  
+    ##       V33              V34              V35              V36        
+    ##  Min.   : 1.957   Min.   : 1.516   Min.   : 1.004   Min.   : 3.471  
+    ##  1st Qu.:34.362   1st Qu.:27.193   1st Qu.:29.430   1st Qu.:27.383  
+    ##  Median :53.010   Median :55.433   Median :50.793   Median :58.810  
+    ##  Mean   :51.126   Mean   :53.446   Mean   :47.748   Mean   :54.664  
+    ##  3rd Qu.:68.134   3rd Qu.:79.470   3rd Qu.:68.665   3rd Qu.:77.437  
+    ##  Max.   :94.148   Max.   :99.825   Max.   :96.833   Max.   :95.349  
+    ##       V37              V38              V39              V40         
+    ##  Min.   : 1.292   Min.   : 2.572   Min.   : 2.706   Min.   : 0.4807  
+    ##  1st Qu.:25.458   1st Qu.:21.938   1st Qu.:29.819   1st Qu.:20.5483  
+    ##  Median :51.711   Median :45.930   Median :57.068   Median :46.1605  
+    ##  Mean   :46.501   Mean   :47.926   Mean   :52.186   Mean   :45.5851  
+    ##  3rd Qu.:64.937   3rd Qu.:67.741   3rd Qu.:73.225   3rd Qu.:69.6961  
+    ##  Max.   :89.480   Max.   :98.638   Max.   :99.917   Max.   :98.4450
 
 ``` r
 r<- raster(m)

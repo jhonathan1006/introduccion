@@ -4,9 +4,9 @@ output: github_document
 ---
 
 ```{r}
-#Institucion: Programa de Ingenieria en Topografia de las Unidades Tecnológicas de Santander
-
-# autor: "Aponte Saravia Jhonathan"
+#Institucion: Unidades Tecnológicas de Santander
+# Programa: Ingenieria en Topografía
+# Autor: "Aponte Saravia Jhonathan"
 ```
 
 
@@ -14,11 +14,15 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Introducción 
+## Descripcion del  constexto
+A continuación, se presenta aplicaciones básicas de exploración de datos en lenguaje R, donde se comparten los códigos y las instrucciones para realizar operaciones elementales de cálculos aritméticos, procesos de importación de datos, creación de datos vectoriales tales como: la creación de puntos, líneas y polígonos y algunas aplicaciones básicas de cálculo de superficie, perímetro, estimación de coordenadas; así también, la creación de datos tipo raster. El propósito de la guía, está dirigido a interesados que tengan afinidad a los programas de ingeniería, cuyo interés es el uso de los datos espaciales, así mismo, es de circulación nacional sin enfoque diferencial.      
 
-En este proceso se intenta de presentar procesos de acercamiento de con el programa R Package,
 
-## Desarrollo del proceso 
+
+ 
+
+
+
 #### Operaciones basicas con R
 
 ```{r}
